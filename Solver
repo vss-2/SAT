@@ -3,6 +3,13 @@ let location = process.argv[2];
 
 readFormula(location);
 
+exports.solve = function(location) {
+  let formula = propsat.readFormula(location)
+  let result = doSolve(formula.clauses, formula.variables)
+  return result;
+   // two fields: isSat and satisfyingAssignment
+}
+
 function readFormula(location) {
   let start = require('fs');
   let text = start.readFileSync(location, 'utf8').toString();
@@ -22,7 +29,7 @@ function readFormula(location) {
     result.clauses = clauses;
     result.variables = variables;
   }
-  return result
+  return result;
 
   }
 
@@ -96,28 +103,34 @@ function readFormula(location) {
 
 
 
- function doSolve(clauses, assignment) {
+ function doSolve(clauses, assignment, qV) {
   let isSat = false;
 
   let size = clauses.length;
 
-  while ((!isSat) && /* must check whether this is the last assignment or not*/) {
-    // does this assignment satisfy the formula? If so, make isSat true. 
+  while ((!isSat) && strassignment.!includes("0")) {
     if (){
     	isSat = true;
-    }
-    // if not, get the next assignment and try again. 
+    } else {
     assignment = nextAssignment(assignment);
+	}
 
-
-
-
+	let strassignment = assignment.toString();
+    
+    while(strassignment.length <){
+    	strassignment = "0"+strassignment;
+    }
+    bruteforcer(strassignment);
   }
+
+
   let result = {'isSat': isSat, satisfyingAssignment: null}
+  
   if (isSat == true) {
-    result.satisfyingAssignment = assignment;
+    result.satisfyingAssignment = strassignment;
   }
-  return result
+  return result; //pra retornar dois deve ser um array
+
 }
 
 function nextAssignment(assignment){
@@ -129,4 +142,18 @@ function nextAssignment(assignment){
 	}
 	let basetwo = assignment.toString(2);
 	return basetwo;
+}
+
+function bruteforcer(clauses, qV){
+	let cnt = 0;
+	while (clauses[cnt] != undefined){
+		let str5 = clauses[cnt];
+		if(assignment.charAt() == 1){
+
+		} else {
+
+		}
+	cnt++;
+	}
+
 }
