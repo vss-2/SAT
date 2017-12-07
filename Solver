@@ -1,159 +1,138 @@
 process.argv[2];
 let location = process.argv[2];
 
-readFormula(location);
+readFormula(location)
 
 exports.solve = function(location) {
-  let formula = propsat.readFormula(location)
-  let result = doSolve(formula.clauses, formula.variables)
-  return result;
-   // two fields: isSat and satisfyingAssignment
+	let formula = propsat.readFormula(location)
+	let result = doSolve(formula.clauses, formula.variables)
+	return result
+	// two fields: isSat and satisfyingAssignment
 }
 
 function readFormula(location) {
-  let start = require('fs');
-  let text = start.readFileSync(location, 'utf8').toString();
-  let character = 'v';
-  let qV = readQuantity(text, character);
-  character = 'c';
-  let qC = readQuantity(text, character);
-  let clauses = readClauses(text, qC);
-  let variables = readVariables(clauses, qV);
+	let start = require('fs') // chama o fs
+	let text2 = start.readFileSync(location, 'utf8').toString() // pega o texto
+																// e transforma
+																// em string
+	let text = text2.split("\n") // quebra e joga cada linha em um array
+	let clauses = readClauses(text) // passa o texto
+	let variables = readVariables(clauses)
 
+	let specOk = checkProblemSpecification(text, clauses, variables)
 
-  let specOk = checkProblemSpecification(text, clauses, variables);
+	let result = {
+		'clauses' : [],
+		'variables' : []
+	}
 
-  let result = { 'clauses': [], 'variables': [] }
-  
-  if (specOk) {
-    result.clauses = clauses;
-    result.variables = variables;
-  }
-  return result;
+	if (specOk) {
+		result.clauses = clauses
+		result.variables = variables
+	}
+	return result
 
-  }
+}
 
-//cnt is for counters
-//str is for strings
-//val is for values
-//arr is for array
+// cnt is for counters
+// str is for strings
+// val is for values
+// arr is for array
 
-  function readQuantity(text, character){
-	if (character == 'v'){
-		if(text[cnt].includes("cnf ")){
-			if (text[cnt].startsWith("p")){
-				let str = text[cnt].toString();
-				let val = str.indexOf("cnf ");
-				let val2 = 0;
-				var str2 = "";
-				while (str.charAt[val2+val] != " "){
-					let str3 = str2;
-					str2 = str3.toString() + str.charAt[val2+val].toString();
-				val2++;
+function readQuantity(text, character) {
+	if (character == 'v') {
+		if (text[cnt].includes("cnf ")) {
+			if (text[cnt].startsWith("p")) {
+				let str = text[cnt].toString()
+				let val = str.indexOf("cnf ")
+				let val2 = 0
+				var str2 = ""
+				while (str.charAt[val2 + val] != " ") {
+					let str3 = str2
+					str2 = str3.toString() + str.charAt[val2 + val].toString()
+					val2++
 				}
-				return str2;
+				return str2
 			}
 		}
-	} else if (character == 'c'){
-		if(text[cnt].includes("cnf ")){
-			let str = text[cnt].toString();
-			let val = str.length;
-			let str2 = "";
-			while(str.charAt(val - 1) != " "){
-				let str3 = str2;
-				str2 = str.charAt[val -1].toString() + str3.toString();
-				val--;
+	} else if (character == 'c') {
+		if (text[cnt].includes("cnf ")) {
+			let str = text[cnt].toString()
+			let val = str.length
+			let str2 = ""
+			while (str.charAt(val - 1) != " ") {
+				let str3 = str2
+				str2 = str.charAt[val - 1].toString() + str3.toString()
+				val--
 			}
-			return str2;
+			return str2
 		}
 	}
 }
-  function readVariables(text, qV){
-
-  }
-
-  function readClauses(text, qC){
- 	var arr = new Array;
- 	var arr2 = new Array;
- 	let cont = 0;
- 	while(text[cont] != undefined){
- 		if (text[cont].endsWith("0")){
- 			let str = text[cont].toString();
- 			let str2 = new Array;
- 			arr2 = str.split(" ");
- 			let cont3 = 0;
- 			let str4 = new Array;
- 			while (arr2[cont3] != " " || arr2[cont3] != undefined){
- 			if(arr2[cont~3.includes(" ")){
- 				arr2 = arr2.filter(function(str2) {
- 					return arr2.trim() != " "; 
- 				});
- 			}
- 			}
- 		}
- 	}
- 	return arr2;
- }
-
- 
-
- function checkProblemSpecification(text, clauses, variables){
-
- }
-
-
-
- function doSolve(clauses, assignment, qV) {
-  let isSat = false;
-
-  let size = clauses.length;
-
-  while ((!isSat) && strassignment.!includes("0")) {
-    if (){
-    	isSat = true;
-    } else {
-    assignment = nextAssignment(assignment);
+function readClauses(text) {
+	let cont = 0;
+	var clauses = new Array()
+	while (text[cont] != undefined) {
+		if (text[cont].endsWith(" 0")) {
+			clauses[cont] = text[cont].split(" 0").pop()
+			cont++
+		}
 	}
-
-	let strassignment = assignment.toString();
-    
-    while(strassignment.length <){
-    	strassignment = "0"+strassignment;
-    }
-    bruteforcer(strassignment);
-  }
-
-
-  let result = {'isSat': isSat, satisfyingAssignment: null}
-  
-  if (isSat == true) {
-    result.satisfyingAssignment = strassignment;
-  }
-  return result; //pra retornar dois deve ser um array
-
+	return clauses
 }
 
-function nextAssignment(assignment){
-
-	if(assignment == undefined){
-
-	} else {
-		assignment += 1;
+function readVariables(clauses) {
+	let cont2 = 0
+	var variables = new Array()
+	while (clauses[cont2] != undefined) {
+		let split = clauses.split(" ");
+		let cont3 = 0
+		while (cont3 < split.length) {
+			split = split.filter(function(split) {
+				return split.trim() != '';
+			});
+			variables[cont2][cont3] = split[cont3];
+			cont3++
+		}
+		cont2++
 	}
-	let basetwo = assignment.toString(2);
-	return basetwo;
+	cont2 = 0
+	cont3 = 0
+	var arrf = new Array;
+	while (variables[cont2][cont3] != undefined) {
+		while (variables[cont2][cont3] != undefined) {
+			let arrf = variables[cont2][cont3]
+			if (str.includes("-")) {
+			}
+			cont3++
+		}
+		cont2++
+	}
+	arrf.sort(function(a, b) {
+		return b - a
+	});
+	return arrf;
 }
 
-function bruteforcer(clauses, qV){
-	let cnt = 0;
-	while (clauses[cnt] != undefined){
-		let str5 = clauses[cnt];
-		if(assignment.charAt() == 1){
+function checkProblemSpecification(text, clauses, variables) {
+	let cont = 0
+	var size = variables.length;
+	while (text[cont] != undefined) {
+		if (text[cont].startsWith("p ") && text[cont].includes("cnf")) {
+			let str = text[cont].split(" ");
+			str = str.filter(function(str) {
+				return str.trim() != '';
+			});
+			let str2 = str[2];
+			let str3 = str[3];
+			if (str == size) {
+				return true;
+			} else {
+				return false;
+			}
 
 		} else {
-
+			return false;
 		}
-	cnt++;
 	}
-
 }
