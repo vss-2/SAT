@@ -36,37 +36,6 @@ function readFormula(location) {
 	return result
 
 }
-
-function readQuantity(text) {
-	if (character == 'v') {
-		if (text[cnt].includes("cnf ")) {
-			if (text[cnt].startsWith("p")) {
-				let str = text[cnt].toString()
-				let val = str.indexOf("cnf ")
-				let val2 = 0
-				var str2 = ""
-					while (str.charAt[val2 + val] != " ") {
-						let str3 = str2
-						str2 = str3.toString() + str.charAt[val2 + val].toString()
-						val2++
-					}
-				return str2
-			}
-		}
-	} else if (character == 'c') {
-		if (text[cnt].includes("cnf ")) {
-			let str = text[cnt].toString()
-			let val = str.length
-			let str2 = ""
-				while (str.charAt(val - 1) != " ") {
-					let str3 = str2
-					str2 = str.charAt[val - 1].toString() + str3.toString()
-					val--
-				}
-			return str2
-		}
-	}
-}
 function readClauses(text) {
 	let cont = 0;
 	var clauses = new Array()
@@ -139,9 +108,8 @@ function doSolve(clauses, assignment) {
 	var boolean = '';
 	var strb = '';
 	var cont2 = 0;
-	while (a[cont] != undefined && boolean != "stop"){
-		let strb = b[cont] + "";
-		console.log(strb)
+	let strb = b[cont] + "";
+	while (a[cont] != undefined || strb!.include("0"){
 		if (strb.charAt(cont2) == 0){
 			if (t == false || t == ''){
 				t = false;
