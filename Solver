@@ -1,4 +1,3 @@
-process.argv[2];
 let location = process.argv[2];
 
 readFormula(location)
@@ -17,7 +16,8 @@ exports.solve = function(location) {
 
 function readFormula(location) {
 	let start = require('fs') // chama o fs
-	let text2 = start.readFileSync(location, 'utf8').toString() // pega o texto  e transforma em string
+	let text2 = start.readFileSync(location, 'utf8').toString() 
+	// pega o texto	 e transforma em string
 	let text = text2.split("\n") // quebra e joga cada linha em um array
 	let clauses = readClauses(text) // passa o texto
 	let variables = readVariables(clauses)
@@ -37,7 +37,6 @@ function readFormula(location) {
 
 }
 
-
 function readQuantity(text) {
 	if (character == 'v') {
 		if (text[cnt].includes("cnf ")) {
@@ -46,11 +45,11 @@ function readQuantity(text) {
 				let val = str.indexOf("cnf ")
 				let val2 = 0
 				var str2 = ""
-				while (str.charAt[val2 + val] != " ") {
-					let str3 = str2
-					str2 = str3.toString() + str.charAt[val2 + val].toString()
-					val2++
-				}
+					while (str.charAt[val2 + val] != " ") {
+						let str3 = str2
+						str2 = str3.toString() + str.charAt[val2 + val].toString()
+						val2++
+					}
 				return str2
 			}
 		}
@@ -59,11 +58,11 @@ function readQuantity(text) {
 			let str = text[cnt].toString()
 			let val = str.length
 			let str2 = ""
-			while (str.charAt(val - 1) != " ") {
-				let str3 = str2
-				str2 = str.charAt[val - 1].toString() + str3.toString()
-				val--
-			}
+				while (str.charAt(val - 1) != " ") {
+					let str3 = str2
+					str2 = str.charAt[val - 1].toString() + str3.toString()
+					val--
+				}
 			return str2
 		}
 	}
@@ -135,4 +134,59 @@ function checkProblemSpecification(text, clauses, variables) {
 }
 
 function doSolve(clauses, assignment) {
+	let cont = 0
+	var t = '';
+	var boolean = '';
+	var strb = '';
+	var cont2 = 0;
+	while (a[cont] != undefined && boolean != "stop"){
+		let strb = b[cont] + "";
+		console.log(strb)
+		if (strb.charAt(cont2) == 0){
+			if (t == false || t == ''){
+				t = false;
+				cont2++
+			} else {
+				boolean = "stop";
+				nextAssignment(assignment)
+			}
+		} else {
+			if (t == true || t == ''){
+				t = true;
+				cont++
+			} else {
+				boolean = "stop";
+				nextAssignment(assignment)
+			}
+		}
+		boolean = "";
+		cont++
+	}
+	if (t == true && boolean != "stop"){
+		console.log("isSat", t)
+		let comb = assignment+"";
+		let cont7 = 0
+		while(comb.charAt(cont7) != undefined){
+			if(comb.chartAt(cont7) == 0){
+				console.log("true")
+			} else {
+				console.log("false")
+			}
+		}
+		
+	} else {
+		console.log("isSat", t)
+		console.log("null")
+	}
+}
+
+function nextAssignment(assignment) {
+	// faz a conversao para base binaria quantas vezes forem necessarias
+	if (assignment == undefined) {
+		assignment = 1
+	} else {
+		assignment += 1
+	}
+	let basetwo = assignment.toString(2)
+	return basetwo
 }
