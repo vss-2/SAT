@@ -3,6 +3,11 @@ let location = process.argv[2];
 
 readFormula(location)
 
+// cnt is for counters
+// str is for strings
+// val is for values
+// arr is for array
+
 exports.solve = function(location) {
 	let formula = propsat.readFormula(location)
 	let result = doSolve(formula.clauses, formula.variables)
@@ -12,9 +17,7 @@ exports.solve = function(location) {
 
 function readFormula(location) {
 	let start = require('fs') // chama o fs
-	let text2 = start.readFileSync(location, 'utf8').toString() // pega o texto
-																// e transforma
-																// em string
+	let text2 = start.readFileSync(location, 'utf8').toString() // pega o texto  e transforma em string
 	let text = text2.split("\n") // quebra e joga cada linha em um array
 	let clauses = readClauses(text) // passa o texto
 	let variables = readVariables(clauses)
@@ -34,12 +37,8 @@ function readFormula(location) {
 
 }
 
-// cnt is for counters
-// str is for strings
-// val is for values
-// arr is for array
 
-function readQuantity(text, character) {
+function readQuantity(text) {
 	if (character == 'v') {
 		if (text[cnt].includes("cnf ")) {
 			if (text[cnt].startsWith("p")) {
@@ -135,4 +134,7 @@ function checkProblemSpecification(text, clauses, variables) {
 			return false;
 		}
 	}
+}
+
+function doSolve(clauses, assignment) {
 }
