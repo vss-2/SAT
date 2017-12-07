@@ -107,9 +107,7 @@ function readVariables(clauses) {
 		}
 		cont2++
 	}
-	arrf.sort(function(a, b) {
-		return b - a
-	});
+	arrf.sort()
 	return arrf;
 }
 
